@@ -1,13 +1,15 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { CommonModule } from '@angular/common';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-featured',
-  imports: [CommonModule],
+  imports: [CommonModule, RouterLink],
   templateUrl: './featured.component.html',
 })
 export class FeaturedComponent implements OnInit {
+  redirectLink = "['/products', product.id]";
   featuredProducts: any[] = [];
   loading: boolean = true;
 

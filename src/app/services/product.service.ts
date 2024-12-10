@@ -14,6 +14,10 @@ export class ProductService {
     return this.http.get<any[]>(`${this.apiUrl}/browse`);
   }
 
+  getProductById(productId: number): Observable<any[]> {
+    return this.http.get<any[]>(`${this.apiUrl}/${productId}`)
+  }
+
   getProductsByCategoryId(categoryId: number): Observable<any[]> {
     const sortOption = 'price_asc'; // Default sort option
     const page = 1; // Default page
