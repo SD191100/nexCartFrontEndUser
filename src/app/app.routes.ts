@@ -4,6 +4,8 @@ import { RegisterComponent } from './screens/register/register.component';
 import { HomeComponent } from './screens/home/home.component';
 import { CategoriesComponent } from './screens/categories/categories.component';
 import { ProductsComponent } from './screens/products/products.component';
+import { CartComponent } from './screens/cart/cart.component';
+import { UserProfileComponent } from './screens/user-profile/user-profile.component';
 
 export const routes: Routes = [
   {
@@ -24,5 +26,7 @@ export const routes: Routes = [
     component: HomeComponent,
   },
   { path: 'categories/:id/:name', component: CategoriesComponent },
-  { path: 'products/:id', component:  ProductsComponent },
+  { path: 'products/:id', component: ProductsComponent },
+  { path: 'cart', component: CartComponent },
+  { path: 'account', component: UserProfileComponent}
 ];

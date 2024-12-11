@@ -1,8 +1,10 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute, RouterLink } from '@angular/router';
+import { ActivatedRoute, Router, RouterLink } from '@angular/router';
 import { ProductService } from '../../services/product.service';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
+import { CartService } from '../../services/cart.service';
+import { AuthService } from '../../services/auth-service.service';
 
 @Component({
   selector: 'app-products',
@@ -12,6 +14,7 @@ import { FormsModule } from '@angular/forms';
 })
 export class ProductsComponent {
   productId: number = 0;
+  userId: number = 0;
   productDetail = {
     category: null,
     categoryId: null,
@@ -30,6 +33,9 @@ export class ProductsComponent {
   constructor(
     private route: ActivatedRoute,
     private productService: ProductService,
+    private cartService: CartService,
+    private authService: AuthService,
+    private router: Router,
   ) { }
 
   ngOnInit(): void {
@@ -50,6 +56,27 @@ export class ProductsComponent {
       error: (err: any) => {
         console.error('Error fetching products:', err);
         this.loading = false;
+      },
+    });
+  }
+
+  onClick(): void {
+    this.userId = this.authService.getUserId() || 0;
+    console.log(this.userId);
+    console.log('function entered');
+    //this.router.navigate(['/cart']);
+    if (this.authService.getToken() != null) {
+      this.router.navigate(['/cart']); // Navigate after the request completes
+    } else {
+      this.router.navigate(['/login']);
+    }
+
+    this.cartService.addToCart(this.userId, this.productId, 1).subscribe({
+      next: (response) => {
+        console.log('Item added to cart successfully', response);
+      },
+      error: (err) => {
+        console.error('Error adding item to cart', err);
       },
     });
   }

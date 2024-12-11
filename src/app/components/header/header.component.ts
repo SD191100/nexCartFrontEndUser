@@ -21,6 +21,7 @@ export class HeaderComponent implements OnInit {
   tokenAvailable: Signal<boolean>;
   constructor(private router: Router, private categoryService: CategoryService) {
     this.tokenAvailable = signal(!!localStorage.getItem('jwtToken'));
+    console.log(this.tokenAvailable);
     // Update the account button link dynamically based on token presence
     effect(() => {
       this.buttons[2].link = this.tokenAvailable() ? '/account' : '/login';
