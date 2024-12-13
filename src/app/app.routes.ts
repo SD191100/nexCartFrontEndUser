@@ -7,6 +7,7 @@ import { CartComponent } from './screens/cart/cart.component';
 import { UserProfileComponent } from './screens/user-profile/user-profile.component';
 import { ProductBrowsingComponent } from './screens/product-details/product-details.component';
 import { CheckoutComponent } from './screens/checkout/checkout.component';
+import { PaymentComponent } from './screens/payment/payment.component';
 
 export const routes: Routes = [
   {
@@ -33,4 +34,7 @@ export const routes: Routes = [
   {
     path: 'checkout', component: CheckoutComponent
   },
+  {
+    path: 'payment', component: PaymentComponent
+  }
 ];
