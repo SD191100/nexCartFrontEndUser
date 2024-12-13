@@ -124,14 +124,25 @@ l-63 -3 0 -32z" />
           </a>
         </div>
       </div>
-      <div class="my-3">
+      <div class="my-3 flex items-center justify-between px-6">
         <ul class="flex space-x-5 mb-2">
-          <li class="text-normal text-gray-600" *ngFor="let item of categories">
-            <a [routerLink]="['/categories', item.categoryId, item.name]" > {{item.name}}</a>
+          <li class="text-normal text-gray-600">
+            <a [routerLink]="['/products']" [queryParams]="{ searchQuery: '' }">
+              All</a>
+          </li>
+
+          <li class="text-normal text-gray-600" *ngFor="let item of categories.slice(0, 6)">
+            <a [routerLink]="['/products']" [queryParams]="{ categoryId: item.categoryId }">
+              {{ item.name }}
+            </a>
           </li>
         </ul>
-        <hr />
+        <div class="flex justify-between items-center mb-2">
+          <input type="text" placeholder="Search products..." class="border border-gray-300 rounded-lg px-4 py-2 w-96"
+            [(ngModel)]="searchQuery" (change)="fetchProducts()" />
+        </div>
       </div>
+      <hr />
     </div>
   </div>
 </header>

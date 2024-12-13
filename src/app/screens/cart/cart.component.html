@@ -22,6 +22,11 @@
     <!-- Summary Section -->
     <div class="col-span-4 bg-white shadow-md rounded-lg p-6">
       <h2 class="text-xl font-semibold mb-4">Order Summary</h2>
+<div class="flex justify-between mb-3">
+        <span class="text-gray-700">Total Amount</span>
+        <span class="text-gray-700">₹{{ total }}</span>
+      </div>
+
       <div class="flex justify-between mb-3">
         <span class="text-gray-700">Shipping Cost</span>
         <span class="text-gray-700">₹0.00</span>
@@ -32,12 +37,12 @@
       </div>
       <div class="flex justify-between mb-3">
         <span class="text-gray-700">GST (18%)</span>
-        <span class="text-gray-700">₹{{ getTotal() * 0.18 | number: '1.2-2' }}</span>
+        <span class="text-gray-700">₹{{ total * 0.18 | number: '1.2-2' }}</span>
       </div>
       <hr class="my-4" />
       <div class="flex justify-between text-lg font-bold">
         <span>Estimated Total</span>
-        <span>₹{{ getTotal() * 1.18 | number: '1.2-2' }}</span>
+        <span>₹{{ total * 1.18 | number: '1.2-2' }}</span>
       </div>
       <button
         class="w-full bg-blue-600 text-white py-2 mt-6 rounded-lg hover:bg-blue-700 transition"

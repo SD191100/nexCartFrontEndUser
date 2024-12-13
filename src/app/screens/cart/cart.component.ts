@@ -4,8 +4,10 @@ import { CartService } from '../../services/cart.service';
 import { CartItemComponent } from '../../components/cart-item/cart-item.component';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { AuthService } from '../../services/auth-service.service';
+import { OrderService } from '../../services/order.service';
+import { CheckoutDataService } from '../../services/checkout-data.service';
 
 @Component({
   selector: 'app-cart',
@@ -16,12 +18,17 @@ import { AuthService } from '../../services/auth-service.service';
 
 export class CartComponent {
   cart: Cart | null = null;
-  userId = 0; // Replace with actual user ID logic
+  userId = 0;
+  cartItems: any[] = []; // Initialize as an empty array
+  total: number = 0;
 
   constructor(
     private cartService: CartService,
     private authService: AuthService,
-  ) { }
+    private orderService: OrderService,
+    private router: Router,
+    private checkoutDataService: CheckoutDataService
+  ) {}
 
   ngOnInit(): void {
     this.getUserId();
@@ -42,20 +49,67 @@ export class CartComponent {
     this.cartService.loadCart(this.userId);
     this.cartService.cart$.subscribe((cart) => {
       this.cart = cart;
-      console.log(cart);
-      console.log("Load Cart")
+      console.log('cart: ', cart);
+      this.cartItems = cart?.cartItems || []; // Ensure cartItems is never undefined
+      console.log(this.cartItems);
+
+      if (this.cartItems.length > 0) {
+        console.log('running getTotal function...');
+        this.getTotal(); // Call getTotal only when cartItems is populated
+      } else {
+        console.error('Cart is empty. Skipping total calculation.');
+      }
     });
   }
 
-  getTotal(): number {
-    return (this.cart?.cartItems || []).reduce(
-      (sum, item) => sum + item.totalPrice,
-      0,
-    );
+  getTotal(): void {
+    const body = {
+      cartItems: this.cartItems, // Ensure this is populated
+      shippingAddress: 'string',
+      paymentMethod: 'string',
+    };
+
+    console.log('Cart Items:', this.cartItems);
+
+    if (!this.cartItems || this.cartItems.length === 0) {
+      console.error('CartItems is empty or invalid!');
+      return;
+    }
+
+    console.log(body);
+
+    this.orderService.getCheckout(body).subscribe({
+      next: (res) => {
+        console.log("printing res")
+        console.log(res);
+        this.total = res.totalAmount;
+      },
+      error: (err) => {
+        console.error('Error during checkout:', err.error);
+      },
+    });
   }
 
-  checkout(): void {
-    alert('Proceeding to checkout...');
-    // Implement checkout logic here
+   checkout(): void {
+    if (!this.cartItems || this.cartItems.length === 0) {
+      alert('Your cart is empty!');
+      return;
+    }
+
+    //const checkoutData = {
+    //  cartItems: this.cartItems,
+    //  total: this.total,
+    //};
+    const checkoutData = {
+      cartItems: this.cartItems,
+      total: this.total,
+    };
+
+    this.checkoutDataService.setCheckoutData(checkoutData);
+
+    console.log("entering the checkout page function")
+
+    this.router.navigate(['/checkout']); // Redirect to checkout with data
   }
 }
+

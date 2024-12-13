@@ -34,7 +34,7 @@ export class UserService {
   // Get user ID from the token (used for dynamic profile loading)
 
   // Get all addresses of a user by userId
-  getUserAddresses(userId: number): Observable<any[]> {
+  getUserAddresses(userId: number| null): Observable<any[]> {
     return this.http.get<any[]>(`${this.addressApiUrl}/user/${userId}`);
   }
 
