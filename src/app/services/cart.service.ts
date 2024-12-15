@@ -73,11 +73,12 @@ const token = this.authService.getToken(); // Retrieve the token from AuthServic
   }
 
   // Clear the cart
-  clearCart(userId: number): Observable<void> {
+  clearCart(userId: number | null ): Observable<void> {
 const token = this.authService.getToken(); // Retrieve the token from AuthService
     const headers = new HttpHeaders({
       Authorization: `Bearer ${token}`, // Attach the token to the Authorization header
     });
+    console.log("clearing Cart")
     return this.http.delete<void>(`${this.baseUrl}/${userId}/clear`, { headers });
   }
 }

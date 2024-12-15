@@ -10,5 +10,8 @@ export interface Product {
     seller: null,
     sellerId: number,
     stock: number,
-
+    MainImage: string,
+    SecondImage: string,
+    ThirdImage: string,
+    Details: string,
 };

@@ -23,7 +23,7 @@ export class HeaderComponent implements OnInit {
   //categoryId: number = 0;
   categories: any[] = [];
   buttons = [
-    { id: 1, icon: 'assets/fav.svg', link: '/favourites' },
+    { id: 1, icon: 'assets/fav.svg', link: '/orders' },
     { id: 2, icon: 'assets/cart.svg', link: '/cart' },
     { id: 3, icon: 'assets/account.svg', link: '' },
   ];

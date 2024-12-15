@@ -8,6 +8,7 @@ import { UserProfileComponent } from './screens/user-profile/user-profile.compon
 import { ProductBrowsingComponent } from './screens/product-details/product-details.component';
 import { CheckoutComponent } from './screens/checkout/checkout.component';
 import { PaymentComponent } from './screens/payment/payment.component';
+import { OrderComponent } from './screens/order/order.component';
 
 export const routes: Routes = [
   {
@@ -36,5 +37,6 @@ export const routes: Routes = [
   },
   {
     path: 'payment', component: PaymentComponent
-  }
+  },
+  { path: 'orders', component: OrderComponent },
 ];

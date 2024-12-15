@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { ProductService } from '../../services/product.service';
 import { CommonModule } from '@angular/common';
 import { RouterLink } from '@angular/router';
+import { Product } from '../../models/product/product';
 
 @Component({
   selector: 'app-featured',
@@ -10,7 +11,7 @@ import { RouterLink } from '@angular/router';
 })
 export class FeaturedComponent implements OnInit {
   redirectLink = "['/products', product.id]";
-  featuredProducts: any[] = [];
+  featuredProducts: Product[] = [];
   loading: boolean = true;
 
   constructor(private productService: ProductService) {}

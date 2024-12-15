@@ -44,4 +44,15 @@ export class OrderService {
       headers,
     });
   }
+
+  getOrdersByUserId(): Observable<any> {
+    let token = this.authService.getToken();
+    let userId = this.authService.getUserId();
+    const headers = new HttpHeaders({
+      Authorization: `Bearer ${token}`, // Attach the token to the Authorization header
+    });
+    return this.http.get(`${this.apiUrl}/user/${userId}`, {
+      headers,
+    });
+  }
 }

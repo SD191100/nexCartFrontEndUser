@@ -11,6 +11,7 @@ import { CheckoutDataService } from '../../services/checkout-data.service';
 import { AuthService } from '../../services/auth-service.service';
 import { OrderService } from '../../services/order.service';
 import { CommonModule } from '@angular/common';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-payment',
@@ -45,6 +46,7 @@ export class PaymentComponent {
     private authService: AuthService,
     private orderService: OrderService,
     private router: Router,
+    private cartService: CartService,
   ) { }
 
   ngOnInit(): void {
@@ -86,7 +88,7 @@ export class PaymentComponent {
 
         if (paymentID != 0) {
           const formattedAddress = `${this.shippingAddress.street}, ${this.shippingAddress.city}, ${this.shippingAddress.state}, ${this.shippingAddress.country}, ${this.shippingAddress.postalCode}`;
-          console.log(formattedAddress , " ", " payment id", paymentID);
+          console.log(formattedAddress, ' ', ' payment id', paymentID);
           const orderData = {
             userId: this.authService.getUserId(),
             cartItems: this.cartItems,
@@ -99,6 +101,7 @@ export class PaymentComponent {
           this.orderService.confirmOrder(orderData).subscribe({
             next: () => {
               alert('Order placed successfully!');
+              this.clearCart();
               this.router.navigate(['/orders']); // Redirect to orders page
             },
             error: (err: any) => {
@@ -115,25 +118,42 @@ export class PaymentComponent {
     });
   }
 
-  confirmOrder(paymentID: number): void {
-    const formattedAddress = `${this.shippingAddress.street}, ${this.shippingAddress.city}, ${this.shippingAddress.state}, ${this.shippingAddress.country}, ${this.shippingAddress.postalCode}`;
-    console.log(formattedAddress);
-    const orderData = {
-      userId: this.authService.getUserId(),
-      cartItems: this.cartItems,
-      shippingAddress: formattedAddress,
-      totalAmount: this.amount,
-      paymentID: paymentID,
-    };
+  //confirmOrder(paymentID: number): void {
+  //  const formattedAddress = `${this.shippingAddress.street}, ${this.shippingAddress.city}, ${this.shippingAddress.state}, ${this.shippingAddress.country}, ${this.shippingAddress.postalCode}`;
+  //  console.log(formattedAddress);
+  //  const orderData = {
+  //    userId: this.authService.getUserId(),
+  //    cartItems: this.cartItems,
+  //    shippingAddress: formattedAddress,
+  //    totalAmount: this.amount,
+  //    paymentID: paymentID,
+  //  };
+  //
+  //  this.orderService.confirmOrder(orderData).subscribe({
+  //    next: () => {
+  //      let userId = this.authService.getUserId();
+  //      console.log('Order placed successfully!');
+  //
+  //      this.clearCart();
+  //      this.router.navigate(['/orders']);
+  //      // Redirect to orders page
+  //    },
+  //    error: (err: any) => {
+  //      console.error('Order confirmation failed:', err);
+  //      alert('Order confirmation failed. Please try again.');
+  //    },
+  //  });
+  //}
 
-    this.orderService.confirmOrder(orderData).subscribe({
-      next: () => {
-        alert('Order placed successfully!');
-        this.router.navigate(['/orders']); // Redirect to orders page
+  clearCart(): void {
+    let userId = this.authService.getUserId();
+
+    this.cartService.clearCart(userId).subscribe({
+      next: (res) => {
+        console.log(res);
       },
       error: (err: any) => {
-        console.error('Order confirmation failed:', err);
-        alert('Order confirmation failed. Please try again.');
+        console.error(err.message);
       },
     });
   }

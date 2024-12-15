@@ -8,7 +8,7 @@ import { AuthService } from '../../services/auth-service.service';
 
 @Component({
   selector: 'app-products',
-  imports: [CommonModule, RouterLink, FormsModule],
+  imports: [CommonModule, FormsModule],
   templateUrl: './products.component.html',
   styleUrl: './products.component.css',
 })

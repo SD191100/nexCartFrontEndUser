@@ -111,5 +111,18 @@ export class CartComponent {
 
     this.router.navigate(['/checkout']); // Redirect to checkout with data
   }
+
+  clearCart(): void {
+    this.cartService.clearCart(this.userId).subscribe(
+      {
+        next: (res) => {
+          console.log(res)
+        },
+        error: (err: any) => {
+          console.error(err.message)
+        }
+      }
+    )
+  }
 }
 
