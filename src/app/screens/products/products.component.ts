@@ -27,8 +27,12 @@ export class ProductsComponent {
     seller: null,
     sellerId: null,
     stock: null,
+    mainImage: '',
+    secondImage: '',
+    thirdImage: '',
   };
   loading: boolean = true;
+  currentImage: string = "";
 
   constructor(
     private route: ActivatedRoute,
@@ -52,6 +56,7 @@ export class ProductsComponent {
         this.productDetail = product;
         console.log(product);
         this.loading = false;
+        this.currentImage = product.mainImage;
       },
       error: (err: any) => {
         console.error('Error fetching products:', err);
@@ -79,5 +84,9 @@ export class ProductsComponent {
         console.error('Error adding item to cart', err);
       },
     });
+  }
+
+  setImage(imageUrl: string): void {
+    this.currentImage = imageUrl;
   }
 }

@@ -119,6 +119,7 @@ l-63 -3 0 -32z" />
           </a>
         </div>
         <div class="flex items-center justify-around space-x-7">
+          <a class="mr-1 " href="http://localhost:3000">Sell</a>
           <a *ngFor="let button of buttons" routerLink="{{ button.link }}">
             <img *ngIf="button.icon" [src]="button.icon" alt="Button Icon" class="w-6 h-6" />
           </a>
